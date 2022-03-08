@@ -1,0 +1,12 @@
+{
+    "prettier.requireConfig": true,
+    "eslint.lintTask.enable": true,
+    "eslint.alwaysShowStatus": true,
+    "restoreTerminals.terminals": [
+      {
+            "name": "start",
+            "commands": ["npm run dev"]
+      }
+    ]
+  }
+  
