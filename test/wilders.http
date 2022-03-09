@@ -6,7 +6,7 @@ Content-Type: application/json
 ###
 
 # FindById
-GET http://localhost:4000/api/v1/wilders/62272bc272d3f1ca282bfc45
+GET http://localhost:4000/api/v1/wilders/62272bc272dd51ca282bfc45
 Content-Type: application/json
 
 ###
@@ -16,25 +16,27 @@ POST http://localhost:4000/api/v1/wilders
 Content-Type: application/json
 
 {
-    "name": "Bobob2",
-    "city": "Bobopolis",
-    "skills": [{"title": "CSS", "votes": 5}]
+    "name": "Bobob3",
+    "city": "Bobopolis3",
+    "skills": []
+
 }
 
 ###
 
 #Update
-PATCH http://localhost:4000/api/v1/wilders/62272bc272d3f1ca282bfc45
+PATCH http://localhost:4000/api/v1/wilders/62272699bc090a0699c7ee3a
 Content-Type: application/json
 
 {
-    "name": "TestBobTest"
+    "city": "Bobopolis3"
 }
+
 
 ###
 
 #UpdateAll
-PUT http://localhost:4000/api/v1/wilders/62272bc272d3f1ca282bfc45
+PUT http://localhost:4000/api/v1/wilders/62272bc27e63f1ca282bfc45
 Content-Type: application/json
 
 {
@@ -44,7 +46,7 @@ Content-Type: application/json
 ###
 
 #Delete
-DELETE http://localhost:4000/api/v1/wilders/62286cbf210b9a307e66bd63
+DELETE http://localhost:4000/api/v1/wilders/622759060dd8a15fdace4b9e
 Content-Type: application/json
 
 ###
