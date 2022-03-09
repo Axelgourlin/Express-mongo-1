@@ -1,6 +1,6 @@
 const WilderModel = require('../models/wilder.model')
 
-const create = async (req, res, next) => {
+const create = async (req, res) => {
   await WilderModel.init()
   const wilder = new WilderModel(req.body)
 
@@ -14,43 +14,35 @@ const create = async (req, res, next) => {
         .status(409)
         .json({ success: false, result: 'Name already use.' })
     }
-    next(error)
+    throw error
   }
 }
 
-const findOneById = async (req, res, next) => {
+const findOneById = async (req, res) => {
   const { id } = req.params
-  try {
-    const wilder = await WilderModel.findById(id)
-    if (!wilder) {
-      return res
-        .status(404)
-        .json({ success: false, result: `Wilder with ID: ${id} not found.` })
-    } else {
-      return res.status(200).json({ success: true, result: wilder })
-    }
-  } catch (error) {
-    next(error)
+
+  const wilder = await WilderModel.findById(id)
+  if (!wilder) {
+    return res
+      .status(404)
+      .json({ success: false, result: `Wilder with ID: ${id} not found.` })
+  } else {
+    return res.status(200).json({ success: true, result: wilder })
   }
 }
 
-const findAll = async (_, res, next) => {
-  try {
-    throw new Error()
-    const wilders = await WilderModel.find()
-    if (!wilders) {
-      return res
-        .status(404)
-        .json({ success: false, result: 'resources not found.' })
-    } else {
-      return res.status(200).json({ success: true, result: wilders })
-    }
-  } catch (error) {
-    next(error)
+const findAll = async (_, res) => {
+  const wilders = await WilderModel.find()
+  if (!wilders) {
+    return res
+      .status(404)
+      .json({ success: false, result: 'resources not found.' })
+  } else {
+    return res.status(200).json({ success: true, result: wilders })
   }
 }
 
-const updatePartial = async (req, res, next) => {
+const updatePartial = async (req, res) => {
   const { id } = req.params
   try {
     const wilder = await WilderModel.findByIdAndUpdate({ _id: id }, req.body, {
@@ -63,44 +55,36 @@ const updatePartial = async (req, res, next) => {
         .status(404)
         .json({ success: false, result: `Wilder with ID: ${id} not found.` })
     }
-    next(error)
+    throw error
   }
 }
 
-const update = async (req, res, next) => {
+const update = async (req, res) => {
   const { id } = req.params
   const { name, city, skills } = req.body
-  try {
-    const wilder = await WilderModel.findById(id)
-    if (!wilder) {
-      return res
-        .status(404)
-        .json({ success: false, result: `Wilder with ID: ${id} not found.` })
-    } else {
-      wilder.name = name
-      wilder.city = city
-      wilder.skills = skills
-      const result = await wilder.save(wilder)
-      return res.status(200).json({ success: true, result: result })
-    }
-  } catch (error) {
-    next(error)
+  const wilder = await WilderModel.findById(id)
+  if (!wilder) {
+    return res
+      .status(404)
+      .json({ success: false, result: `Wilder with ID: ${id} not found.` })
+  } else {
+    wilder.name = name
+    wilder.city = city
+    wilder.skills = skills
+    const result = await wilder.save(wilder)
+    return res.status(200).json({ success: true, result: result })
   }
 }
 
-const destroy = async (req, res, next) => {
+const destroy = async (req, res) => {
   const { id } = req.params
-  try {
-    const result = await WilderModel.remove({ _id: id })
-    if (!result) {
-      return res
-        .status(404)
-        .json({ success: false, result: `Wilder with ID: ${id} not found.` })
-    } else {
-      return res.status(200).json({ success: true, result: result })
-    }
-  } catch (error) {
-    next(error)
+  const result = await WilderModel.remove({ _id: id })
+  if (!result) {
+    return res
+      .status(404)
+      .json({ success: false, result: `Wilder with ID: ${id} not found.` })
+  } else {
+    return res.status(200).json({ success: true, result: result })
   }
 }
 
