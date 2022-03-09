@@ -48,3 +48,6 @@ DELETE http://localhost:4000/api/v1/wilders/62286cbf210b9a307e66bd63
 Content-Type: application/json
 
 ###
+
+#Route not find
+GET http://localhost:4000/api/v1/wilde

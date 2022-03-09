@@ -1,6 +1,6 @@
-const WilderModel = require('../models/Wilder')
+const WilderModel = require('../models/wilder.model')
 
-const create = async (req, res) => {
+const create = async (req, res, next) => {
   await WilderModel.init()
   const wilder = new WilderModel(req.body)
 
@@ -14,11 +14,11 @@ const create = async (req, res) => {
         .status(409)
         .json({ success: false, result: 'Name already use.' })
     }
-    return res.status(500).json({ success: false, result: error })
+    next(error)
   }
 }
 
-const findOneById = async (req, res) => {
+const findOneById = async (req, res, next) => {
   const { id } = req.params
   try {
     const wilder = await WilderModel.findById(id)
@@ -30,12 +30,13 @@ const findOneById = async (req, res) => {
       return res.status(200).json({ success: true, result: wilder })
     }
   } catch (error) {
-    return res.status(500).json({ success: false, result: error })
+    next(error)
   }
 }
 
-const findAll = async (_, res) => {
+const findAll = async (_, res, next) => {
   try {
+    throw new Error()
     const wilders = await WilderModel.find()
     if (!wilders) {
       return res
@@ -45,11 +46,11 @@ const findAll = async (_, res) => {
       return res.status(200).json({ success: true, result: wilders })
     }
   } catch (error) {
-    return res.status(500).json({ success: false, result: error })
+    next(error)
   }
 }
 
-const updatePartial = async (req, res) => {
+const updatePartial = async (req, res, next) => {
   const { id } = req.params
   try {
     const wilder = await WilderModel.findByIdAndUpdate({ _id: id }, req.body, {
@@ -62,11 +63,11 @@ const updatePartial = async (req, res) => {
         .status(404)
         .json({ success: false, result: `Wilder with ID: ${id} not found.` })
     }
-    return res.status(500).json({ success: false, result: error })
+    next(error)
   }
 }
 
-const update = async (req, res) => {
+const update = async (req, res, next) => {
   const { id } = req.params
   const { name, city, skills } = req.body
   try {
@@ -83,11 +84,11 @@ const update = async (req, res) => {
       return res.status(200).json({ success: true, result: result })
     }
   } catch (error) {
-    return res.status(500).json({ success: false, result: error })
+    next(error)
   }
 }
 
-const destroy = async (req, res) => {
+const destroy = async (req, res, next) => {
   const { id } = req.params
   try {
     const result = await WilderModel.remove({ _id: id })
@@ -99,7 +100,7 @@ const destroy = async (req, res) => {
       return res.status(200).json({ success: true, result: result })
     }
   } catch (error) {
-    return res.status(500).json({ success: false, result: error })
+    next(error)
   }
 }
 
